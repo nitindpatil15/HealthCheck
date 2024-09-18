@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "material-icons/iconfont/material-icons.css";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { host } from "../constant";
 
 const Navbar = () => {
-  const host = "http://localhost:5628/api/v1";
   const navigate = useNavigate();
   const token = Cookies.get("accessToken");
 

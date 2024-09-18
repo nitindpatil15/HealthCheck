@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { host, token } from "../constant";
+import Cookies from 'js-cookie'
+import { host } from "../constant";
 
 const AddHealthRecord = () => {
   const navigate = useNavigate()
@@ -20,7 +21,7 @@ const AddHealthRecord = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const token = Cookies.get("accessToken");
     try {
       const response = await axios.post(
         `${host}/healthcheck/health-records`,
@@ -29,7 +30,7 @@ const AddHealthRecord = () => {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer${token}`,
           },
         }
       );

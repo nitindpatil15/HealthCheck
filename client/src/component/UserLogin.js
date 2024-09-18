@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import doctor from "../Assets/img/lovepik-a-doctor-with-a-record-of-medical-records-png-image_400248450_wh1200.png";
 import axios from "axios";
 import Cookies from "js-cookie"
 import { Link, useNavigate } from "react-router-dom";
+import { host } from "../constant";
 
 const UserLogin = () => {
   const navigate = useNavigate()
-  const host = "http://localhost:5628/api/v1";
   const [credentials, setCredentials] = useState({
     username: "",
     email: "",

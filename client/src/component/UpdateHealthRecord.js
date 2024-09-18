@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { host, token } from "../constant";
+import { host } from "../constant";
+import Cookies from "js-cookie"
 import { useParams } from "react-router-dom";
 
 const UpdateHealthRecord = () => {
@@ -10,6 +11,7 @@ const UpdateHealthRecord = () => {
   const [heartRate, setHeartRate] = useState("");
   const [Patient_Name, setPatient_Name] = useState("");
   const [message, setMessage] = useState("");
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -36,7 +38,7 @@ const UpdateHealthRecord = () => {
     };
 
     fetchRecord();
-  }, [id]);
+  }, [id,token]);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -54,7 +56,7 @@ const UpdateHealthRecord = () => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer${token}`,
           },
         }
       );

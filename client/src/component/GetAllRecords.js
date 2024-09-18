@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { host, token } from "../constant";
+import { host } from "../constant";
+import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
 
 const GetAllRecords = () => {
@@ -11,6 +12,8 @@ const GetAllRecords = () => {
   const [filteredRecords, setFilteredRecords] = useState([]); // Filtered records state
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const [heartRateFilter, setHeartRateFilter] = useState(""); // Filter for heart rate
+
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -73,7 +76,7 @@ const GetAllRecords = () => {
         await axios.delete(`${host}/healthcheck/health-records/${id}`, {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer${token}`,
           },
         });
         alert("Record deleted successfully.");
@@ -125,12 +128,12 @@ const GetAllRecords = () => {
       <div className="flex justify-between">
         <h1 className="text-xl md:text-3xl font-bold mb-6 text-center text-white">
           All Health Records{" "}
-          <button
+          {token?<button
             onClick={handleAddrecordbutton}
             className="rounded-lg bg-green-500 hover:bg-green-200 hover:text-black p-2 mx-2"
           >
             Add New Record
-          </button>
+          </button>:<></>}
         </h1>
         <input
           type="number"
@@ -172,24 +175,35 @@ const GetAllRecords = () => {
         </thead>
         <tbody>
           {filteredRecords.map((record) => (
-            <tr
-              key={record._id}
-              onClick={() => handlebyId(record._id)}
-              className="hover:bg-gray-300 cursor-pointer"
-            >
-              <td className="px-8 border-2 border-black text-center py-2">
+            <tr key={record._id} className="hover:bg-gray-300 cursor-pointer">
+              <td
+                className="px-8 border-2 border-black text-center py-2"
+                onClick={() => handlebyId(record._id)}
+              >
                 {new Date(record.Date).toLocaleDateString()}
               </td>
-              <td className="px-8 border-2 border-black text-center py-2">
+              <td
+                className="px-8 border-2 border-black text-center py-2"
+                onClick={() => handlebyId(record._id)}
+              >
                 {record.Patient_Name}
               </td>
-              <td className="px-8 border-2 border-black text-center py-2">
+              <td
+                className="px-8 border-2 border-black text-center py-2"
+                onClick={() => handlebyId(record._id)}
+              >
                 {record.Body_temperature} °C
               </td>
-              <td className="px-8 border-2 border-black text-center py-2">
+              <td
+                className="px-8 border-2 border-black text-center py-2"
+                onClick={() => handlebyId(record._id)}
+              >
                 {record.Blood_pressure} mm Hg
               </td>
-              <td className="px-8 border-2 border-black text-center py-2">
+              <td
+                className="px-8 border-2 border-black text-center py-2"
+                onClick={() => handlebyId(record._id)}
+              >
                 {record.Heart_rate} bpm
               </td>
               {token ? (

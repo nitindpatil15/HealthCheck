@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Ensure you have axios installed
 import { useNavigate, useParams } from "react-router-dom";
-import { host, token } from "../constant";
+import { host } from "../constant";
+import Cookies from 'js-cookie'
 
 const GetRecordById = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [recordById, setRecordById] = useState(null);
   const [message, setMessage] = useState("");
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -17,7 +19,7 @@ const GetRecordById = () => {
           {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer${token}`,
             },
           }
         );
@@ -30,7 +32,7 @@ const GetRecordById = () => {
     };
 
     fetchRecord();
-  }, [id]);
+  }, [id,token]);
 
   const handledelete = async (id) => {
     if (!token) {
@@ -48,7 +50,7 @@ const GetRecordById = () => {
           {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer${token}`,
             },
           }
         );
@@ -105,7 +107,7 @@ const GetRecordById = () => {
             <strong>Recorded Date:</strong>{" "}
             <span className="">{recordById.Date.split("T00:00:00.000Z")}</span>
           </p>
-          <div>
+          {token?<div>
             <button
               onClick={() => handleupdatebutton(recordById._id)}
               className="rounded-lg bg-green-500 hover:bg-green-200 p-2 mx-2"
@@ -118,7 +120,7 @@ const GetRecordById = () => {
             >
               Delete
             </button>
-          </div>
+          </div>:<></>}
         </div>
       </div>
     </>

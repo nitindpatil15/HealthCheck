@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import doctor from "../Assets/img/lovepik-a-doctor-with-a-record-of-medical-records-png-image_400248450_wh1200.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { host } from "../constant";
 
 const UserRegister = () => {
-  const host = "http://localhost:5628/api/v1";
   const [credentials, setCredentials] = useState({
     username: "",
     email: "",
@@ -27,7 +27,7 @@ const UserRegister = () => {
           "Content-Type": "application/json",
         },
       });
-
+      // eslint-disable-next-line
       const result = await response.data;
     } catch (error) {
       console.error("Server Error:", error);
